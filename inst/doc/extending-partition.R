@@ -1,4 +1,4 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
   message = FALSE
 )
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(partition)
 
 part_icc_rowmeans <- replace_partitioner(
@@ -20,7 +20,7 @@ part_icc_rowmeans <- replace_partitioner(
 
 part_icc_rowmeans
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 set.seed(1234)
 
 df <- simulate_block_data(
@@ -34,7 +34,7 @@ prt <- partition(df, .5, partitioner = part_icc_rowmeans)
 prt
 partition_scores(prt)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 inter_item_reliability <- function(.data) {
    corr(.data) %>%
     colMeans(na.rm = TRUE) %>%
@@ -46,7 +46,7 @@ measure_iir <- as_measure(inter_item_reliability)
 prt <- partition(df, .5, partitioner = replace_partitioner(part_icc, measure = measure_iir))
 prt
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 euc_dist <- function(.data) as.matrix(dist(t(.data)))
 
 # find the pair with the minimum distance
@@ -60,13 +60,13 @@ min_dist <- function(.x) {
   )
 }
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 direct_euc_dist <- as_director(euc_dist, min_dist)
 
 prt <- partition(df, .5, partitioner = replace_partitioner(part_icc, direct = direct_euc_dist))
 prt
 
-## ---- eval = FALSE-------------------------------------------------------
+## ---- eval = FALSE------------------------------------------------------------
 #  function(spearman = FALSE) {
 #    as_partitioner(
 #      direct = direct_dist(spearman = spearman),
@@ -75,7 +75,7 @@ prt
 #    )
 #  }
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 custom_part <- as_partitioner(
   direct = as_director(euc_dist, min_dist),
   measure = as_measure(inter_item_reliability),
@@ -84,23 +84,23 @@ custom_part <- as_partitioner(
 
 partition(df, .5, custom_part)
 
-## ---- eval = FALSE-------------------------------------------------------
+## ---- eval = FALSE------------------------------------------------------------
 #  function(.partition_step) {
 #    reduce_cluster(.partition_step, rowMeans)
 #  }
 
-## ---- eval = FALSE-------------------------------------------------------
+## ---- eval = FALSE------------------------------------------------------------
 #  function(.partition_step) {
 #    map_cluster(.partition_step, rowMeans)
 #  }
 
-## ---- eval = FALSE-------------------------------------------------------
+## ---- eval = FALSE------------------------------------------------------------
 #  function(.partition_step, na.rm = FALSE) {
 #    partialized_rowMeans <- purrr::partial(rowMeans, na.rm = na.rm)
 #    map_cluster(.partition_step, partialized_rowMeans)
 #  }
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 direct_hcluster <- function(.partition_step) {
   #  set initial k to 1 - number of cols in data
   if (is.null(.partition_step$k)) {
@@ -124,7 +124,7 @@ direct_hcluster <- function(.partition_step) {
   .partition_step
 }
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 part_hcluster <- as_partitioner(
   direct = direct_hcluster,
   #  use same functions as part_kmeans() but search k linearly 

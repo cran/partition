@@ -10,23 +10,33 @@ knitr::opts_chunk$set(
   message = FALSE
 )
 
+options(tibble.max_extra_cols = 10)
+
 ## -----------------------------------------------------------------------------
 library(partition)
 library(ggplot2)
 set.seed(1234)
 # create a 100 x 15 data set with 3 blocks
 df <- simulate_block_data(
-  # create 3 correlated blocks of 5 variables each
+  # create 3 correlated blocks of 5 features each
   block_sizes = rep(5, 3),
   lower_corr = .4,
   upper_corr = .6,
   n = 100
 )
 
-df
+## -----------------------------------------------------------------------------
+ggcorrplot::ggcorrplot(corr(df))
 
 ## -----------------------------------------------------------------------------
-prt <- partition(df, threshold = .5)
+baxter_otu
+
+## -----------------------------------------------------------------------------
+correlation_subset <- corr(baxter_otu[, 1:200])
+ggcorrplot::ggcorrplot(correlation_subset, hc.order = TRUE) + ggplot2::theme_void()
+
+## -----------------------------------------------------------------------------
+prt <- partition(baxter_otu, threshold = .5)
 
 prt
 
@@ -34,7 +44,13 @@ prt
 partition_scores(prt)
 
 ## -----------------------------------------------------------------------------
-plot_ncluster(prt) +
+pca <- prcomp(baxter_otu)
+
+# print the results more neatly
+tibble::as_tibble(pca$x)
+
+## -----------------------------------------------------------------------------
+plot_ncluster(prt, show_n = 20) +
   # plot_*() functions return ggplots, so they can be extended using ggplot2
   theme_minimal(14)
 
@@ -52,11 +68,11 @@ unnest_mappings(prt)
 part_icc()
 
 ## -----------------------------------------------------------------------------
-prt_kmeans <- partition(df, threshold = .5, partitioner = part_kmeans())
-prt_kmeans
+prt_pc1 <- partition(baxter_otu, threshold = .5, partitioner = part_pc1())
+prt_pc1
 
 ## -----------------------------------------------------------------------------
-# create a data.frame of 10 independent variables
+# create a data.frame of 10 independent features
 ind_df <- purrr::map_dfc(1:10, ~rnorm(30))
 ind_part <- partition(ind_df, .5)
 ind_part

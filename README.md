@@ -1,13 +1,20 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<!-- badges: start -->
+
 [![Travis build
 status](https://travis-ci.org/USCbiostats/partition.svg?branch=master)](https://travis-ci.org/USCbiostats/partition)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/fofb9um8jqyyi6av?svg=true)](https://ci.appveyor.com/project/malcolmbarrett/partition-qaqc6)
 [![Coverage
 status](https://codecov.io/gh/USCbiostats/partition/branch/master/graph/badge.svg)](https://codecov.io/github/USCbiostats/partition?branch=master)
-![](https://www.r-pkg.org/badges/version/partition)
+[![CRAN
+status](https://www.r-pkg.org/badges/version-ago/partition)](https://cran.r-project.org/package=partition)
+[![status](https://joss.theoj.org/papers/6d4569d6cea0a16c87703134fc78fe59/status.svg)](https://joss.theoj.org/papers/6d4569d6cea0a16c87703134fc78fe59)
+[![DOI](https://zenodo.org/badge/178615892.svg)](https://zenodo.org/badge/latestdoi/178615892)
+
+<!-- badges: end -->
 
 # partition
 
@@ -31,7 +38,7 @@ install.packages("partition")
 Or you can install the development version of partition GitHub with:
 
 ``` r
-# install.packages("remotes)
+# install.packages("remotes")
 remotes::install_github("USCbiostats/partition")
 ```
 
@@ -74,8 +81,8 @@ partition_scores(prt)
 #>  8    1.05      2.19       0.913     0.254     0.328    -1.07    -0.976 
 #>  9   -1.07     -0.292     -0.763     0.437     0.739     0.899   -0.342 
 #> 10   -1.02     -0.959     -1.33     -1.57     -1.11      0.618    0.153 
-#> # … with 90 more rows, and 4 more variables: block3_x3 <dbl>,
-#> #   block3_x4 <dbl>, block3_x5 <dbl>, reduced_var_1 <dbl>
+#> # … with 90 more rows, and 4 more variables: block3_x3 <dbl>, block3_x4 <dbl>,
+#> #   block3_x5 <dbl>, reduced_var_1 <dbl>
 
 # access mapping keys
 mapping_key(prt)
@@ -96,20 +103,20 @@ mapping_key(prt)
 
 unnest_mappings(prt)
 #> # A tibble: 12 x 4
-#>    variable      information mapping   indices
-#>    <chr>               <dbl> <chr>       <int>
-#>  1 block1_x1           1     block1_x1       1
-#>  2 block1_x2           1     block1_x2       2
-#>  3 block1_x3           1     block1_x3       3
-#>  4 block2_x1           1     block2_x1       4
-#>  5 block2_x2           1     block2_x2       5
-#>  6 block3_x1           1     block3_x1       8
-#>  7 block3_x2           1     block3_x2       9
-#>  8 block3_x3           1     block3_x3      10
-#>  9 block3_x4           1     block3_x4      11
-#> 10 block3_x5           1     block3_x5      12
-#> 11 reduced_var_1       0.602 block2_x3       6
-#> 12 reduced_var_1       0.602 block2_x4       7
+#>    variable      mapping   information indices
+#>    <chr>         <chr>           <dbl>   <int>
+#>  1 block1_x1     block1_x1       1           1
+#>  2 block1_x2     block1_x2       1           2
+#>  3 block1_x3     block1_x3       1           3
+#>  4 block2_x1     block2_x1       1           4
+#>  5 block2_x2     block2_x2       1           5
+#>  6 block3_x1     block3_x1       1           8
+#>  7 block3_x2     block3_x2       1           9
+#>  8 block3_x3     block3_x3       1          10
+#>  9 block3_x4     block3_x4       1          11
+#> 10 block3_x5     block3_x5       1          12
+#> 11 reduced_var_1 block2_x3       0.602       6
+#> 12 reduced_var_1 block2_x4       0.602       7
 
 # use a lower threshold of information loss
 partition(df, threshold = .5, partitioner = part_kmeans())
@@ -158,4 +165,81 @@ plot_stacked_area_clusters(df) +
   ggplot2::theme_minimal(14)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-stacked_area_chart-1.png" width="100%" />
+
+## Performance
+
+partition has been meticulously benchmarked and profiled to improve
+performance, and key sections are written in C++ or use C++-based
+packages. Using a data frame with 1 million rows on a 2017 MacBook Pro
+with 16 GB RAM, here’s how each of the built-in partitioners perform:
+
+``` r
+large_df <- simulate_block_data(c(3, 4, 5), lower_corr = .4, upper_corr = .6, n = 1e6)
+
+basic_benchmarks <- microbenchmark::microbenchmark(
+  icc = partition(large_df, .3),
+  kmeans = partition(large_df, .3, partitioner = part_kmeans()),
+  minr2 = partition(large_df, .3, partitioner = part_minr2()),
+  pc1 = partition(large_df, .3, partitioner = part_pc1()),
+  stdmi = partition(large_df, .3, partitioner = part_stdmi())
+)
+```
+
+<img src="man/figures/README-secret_benchmarks1-1.png" width="100%" />
+
+## ICC vs K-Means
+
+As the features (columns) in the data set become greater than the number
+of observations (rows), the default ICC method scales more linearly than
+K-Means-based methods. While K-Means is often faster at lower
+dimensions, it becomes slower as the features outnumber the
+observations. For example, using three data sets with increasing numbers
+of columns, K-Means starts as the fastest and gets increasingly slower,
+although in this case it is still comparable to ICC:
+
+``` r
+narrow_df <- simulate_block_data(3:5, lower_corr = .4, upper_corr = .6, n = 100)
+wide_df <- simulate_block_data(rep(3:10, 2), lower_corr = .4, upper_corr = .6, n = 100)
+wider_df <- simulate_block_data(rep(3:20, 4), lower_corr = .4, upper_corr = .6, n = 100)
+
+icc_kmeans_benchmarks <- microbenchmark::microbenchmark(
+  icc_narrow = partition(narrow_df, .3),
+  icc_wide = partition(wide_df, .3),
+  icc_wider = partition(wider_df, .3),
+  kmeans_narrow = partition(narrow_df, .3, partitioner = part_kmeans()),
+  kmeans_wide = partition(wide_df, .3, partitioner = part_kmeans()),
+  kmeans_wider  = partition(wider_df, .3, partitioner = part_kmeans())
+)
+```
+
+<img src="man/figures/README-secret_benchmarks2-1.png" width="100%" />
+
+For more information, see [our paper in
+Bioinformatics](https://doi.org/10.1093/bioinformatics/btz661), which
+discusses these issues in more depth (Millstein et al. 2020).
+
+## Contributing
+
+Please read the [Contributor
+Guidelines](https://github.com/USCbiostats/partition/blob/master/.github/CONTRIBUTING.md)
+prior to submitting a pull request to partition. Also note that this
+project is released with a [Contributor Code of
+Conduct](https://github.com/USCbiostats/partition/blob/master/.github/CODE_OF_CONDUCT.md).
+By participating in this project you agree to abide by its terms.
+
+## References
+
+<div id="refs" class="references hanging-indent">
+
+<div id="ref-R-partition">
+
+Millstein, Joshua, Francesca Battaglin, Malcolm Barrett, Shu Cao, Wu
+Zhang, Sebastian Stintzing, Volker Heinemann, and Heinz-Josef Lenz.
+2020. “Partition: A Surjective Mapping Approach for Dimensionality
+Reduction.” *Bioinformatics* 36 (3): 676–81.
+<https://doi.org/10.1093/bioinformatics/btz661>.
+
+</div>
+
+</div>

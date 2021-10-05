@@ -1,3 +1,8 @@
+# partition 0.1.4
+
+* Fixed testing error with upcoming rlang release (4769186)
+* Fixed unexpected messaging in some functions about column names (#25)
+
 # partition 0.1.3
 
 * Updated to testthat edition 3 (#22)

@@ -31,10 +31,13 @@ test_that("custom partitioners are partitioners", {
 })
 
 test_that("custom metric works", {
-  inter_item_reliability <- function(.data) {
-    corr(.data) %>%
+  inter_item_reliability <- function(mat) {
+    corrs <- corr(mat)
+    corrs[lower.tri(corrs, diag = TRUE)] <- NA
+
+    corrs %>%
       colMeans(na.rm = TRUE) %>%
-      mean()
+      mean(na.rm = TRUE)
   }
 
   part_iir <- replace_partitioner(

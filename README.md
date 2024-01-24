@@ -2,9 +2,9 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/USCbiostats/partition/workflows/R-CMD-check/badge.svg)](https://github.com/USCbiostats/partition/actions)
+[![R-CMD-check](https://github.com/USCbiostats/partition/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/USCbiostats/partition/actions/workflows/R-CMD-check.yaml)
 [![Coverage
-status](https://codecov.io/gh/USCbiostats/partition/branch/master/graph/badge.svg)](https://codecov.io/github/USCbiostats/partition?branch=master)
+status](https://codecov.io/gh/USCbiostats/partition/branch/master/graph/badge.svg)](https://app.codecov.io/github/USCbiostats/partition?branch=master)
 [![CRAN
 status](https://www.r-pkg.org/badges/version-ago/partition)](https://cran.r-project.org/package=partition)
 [![JOSS](https://joss.theoj.org/papers/10.21105/joss.01991/status.svg)](https://doi.org/10.21105/joss.01991)
@@ -78,8 +78,9 @@ partition_scores(prt)
 #>  8    1.05      2.19       0.913     0.254     0.328    -1.07    -0.976 
 #>  9   -1.07     -0.292     -0.763     0.437     0.739     0.899   -0.342 
 #> 10   -1.02     -0.959     -1.33     -1.57     -1.11      0.618    0.153 
-#> # … with 90 more rows, and 4 more variables: block3_x3 <dbl>, block3_x4 <dbl>,
-#> #   block3_x5 <dbl>, reduced_var_1 <dbl>
+#> # ℹ 90 more rows
+#> # ℹ 4 more variables: block3_x3 <dbl>, block3_x4 <dbl>, block3_x5 <dbl>,
+#> #   reduced_var_1 <dbl>
 
 # access mapping keys
 mapping_key(prt)
@@ -118,9 +119,9 @@ unnest_mappings(prt)
 # use a lower threshold of information loss
 partition(df, threshold = .5, partitioner = part_kmeans())
 #> Partitioner:
-#>    Director: K-Means Clusters 
-#>    Metric: Minimum Intraclass Correlation 
-#>    Reducer: Scaled Mean
+#>    Director: <custom director> 
+#>    Metric: <custom metric> 
+#>    Reducer: <custom reducer>
 #> 
 #> Reduced Variables:
 #> 2 reduced variables created from 7 observed variables

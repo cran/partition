@@ -2,8 +2,8 @@
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 7, 
-  fig.height = 5, 
+  fig.width = 7,
+  fig.height = 5,
   fig.align = "center",
   fig.dpi = 320,
   warning = FALSE,
@@ -73,7 +73,7 @@ prt_pc1
 
 ## -----------------------------------------------------------------------------
 # create a data.frame of 10 independent features
-ind_df <- purrr::map_dfc(1:10, ~rnorm(30))
+ind_df <- purrr::map_dfc(1:10, ~ rnorm(30))
 ind_part <- partition(ind_df, .5)
 ind_part
 
@@ -87,7 +87,7 @@ plot_stacked_area_clusters(df) +
 perms <- test_permutation(df, nperm = 10)
 perms
 
-## ---- fig.height = 7----------------------------------------------------------
+## ----fig.height = 7-----------------------------------------------------------
 plot_permutation(perms, .plot = "nreduced") +
   theme_minimal(14)
 

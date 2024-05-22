@@ -1,7 +1,7 @@
-de533f3bdf912a5ab55159b5b27bd606 *DESCRIPTION
+e2b613e19a8360094c68ac00ccca0aa2 *DESCRIPTION
 60c4961eaf1b9de1d6b2ef65056879d9 *LICENSE
 511dd1fa28bb6c612fbf9abf1550bc85 *NAMESPACE
-1fe5ed5724d0d09360cd3444718badc7 *NEWS.md
+a01d42e46eb8ac43ec0e7f9d10dc67f3 *NEWS.md
 eef423e48a50e12535a8cf7bacedc5b3 *R/RcppExports.R
 5cd10a094e51adb34cf75a6af9313219 *R/data.R
 1bd66d196c3b7ec77b88eeb568df4857 *R/directors.R
@@ -15,7 +15,7 @@ ca22debacab8591a0207aaecca292b1a *R/plot.R
 e6a1a0b5a7b3c7617d84167f7633bf12 *R/print.R
 cc8684b9b04f55eedc738ba8b899107b *R/reducers.R
 19babb524fae507f9c5ad86b7ad932e9 *R/simulate_block.R
-b31694e4d5de9c0ea8e6408f9d7a460a *R/super_partition.R
+6153b85b288d5145a86b184fb6f5dfbe *R/super_partition.R
 8d2487dbf45064f33b08e5a80830b68e *R/utils-pipe.R
 30ce21a1ac548e4329f05401eaa33c51 *R/utils.R
 3d0f15e16e4eccabe4fac22646a1a96f *README.md
@@ -28,12 +28,12 @@ af6fdf1d9acbc8914ed755eb63133b68 *data/baxter_genus.rda
 9d7f20b5b522e26a33c1549f91ab9b94 *data/baxter_otu.rda
 c628e7c589cc8df3a9cff3c5f15095bc *inst/CITATION
 42fb277ac0815c4515d7ff23e6201130 *inst/WORDLIST
-1a1eb5ab28fed24fbab9087808a3cb4e *inst/doc/extending-partition.R
-281c94f8aa4871fa7cf2aa502a70311e *inst/doc/extending-partition.Rmd
-9560164957919701404af5eefe21a380 *inst/doc/extending-partition.html
-c1a2c1f7eee36e7e33e1a54f663a92bb *inst/doc/introduction-to-partition.R
-a103451d536ae0149237cf329d388f0e *inst/doc/introduction-to-partition.Rmd
-5252b27383e920d13314358c85572b5e *inst/doc/introduction-to-partition.html
+e8f1d90ca7306bdbf532eb7351d3d7e1 *inst/doc/extending-partition.R
+98002caa5d2cd9fddf63ec6be3692c0d *inst/doc/extending-partition.Rmd
+ba3ab90304bce4031701a0d061a5cb23 *inst/doc/extending-partition.html
+4f80fa5401baac09b89ab9b6437ef860 *inst/doc/introduction-to-partition.R
+5db56a6277c5d8b5afa5bd725b29553c *inst/doc/introduction-to-partition.Rmd
+98d5722f07d25a319f0ada7f36455d62 *inst/doc/introduction-to-partition.html
 059960f95c525c7e40a5a2036a02b926 *man/all_columns_reduced.Rd
 e3d831c748d7cf7aa4a589ab5466788b *man/all_done.Rd
 39415da76d6e03ea3c1cb95ba875242e *man/append_mappings.Rd
@@ -55,7 +55,7 @@ a9ca1cce9a47d83f8aa66cd7c4914f77 *man/corr.Rd
 8addbcc85b2ad85cd02623b360db4c5a *man/direct_distance.Rd
 14d97bbabf192154c6db86b73641e9b7 *man/direct_k_cluster.Rd
 e7fd5ac07634f3691c52721c92860809 *man/direct_measure_reduce.Rd
-05edab6291eea2e8c02aca116d787566 *man/figures/README-secret_benchmarks1-1.png
+353e9f63bff373e766b1902c6bbbfa40 *man/figures/README-secret_benchmarks1-1.png
 cd35c0ca1c2815e757580f8f3d22135a *man/figures/README-secret_benchmarks2-1.png
 aa11327285e41e12dc8c6e1baff97a4a *man/figures/README-stacked_area_chart-1.png
 e831d93ea7b016b960a89a07be46b3f2 *man/figures/README-unnamed-chunk-2-1.png
@@ -133,6 +133,6 @@ b3b0dac16538441f91595edbdff4c761 *tests/testthat/test-partition-objects-are-well
 dc799a59622661d74914e06d9a10a6e6 *tests/testthat/test-partitioners-reduce-correctly.R
 7a31911197ce484d9fb787671cee63cb *tests/testthat/test-permutations-return-correctly.R
 95b3492bce37737bac7073353983b9a9 *tests/testthat/test-plots-are-plotting.R
-de5bc812e750fc46bcfbc4402b5c5094 *tests/testthat/test-super-partition-objects.R
-281c94f8aa4871fa7cf2aa502a70311e *vignettes/extending-partition.Rmd
-a103451d536ae0149237cf329d388f0e *vignettes/introduction-to-partition.Rmd
+942d0f143d98cb6f87c010b19888f57c *tests/testthat/test-super-partition-objects.R
+98002caa5d2cd9fddf63ec6be3692c0d *vignettes/extending-partition.Rmd
+5db56a6277c5d8b5afa5bd725b29553c *vignettes/introduction-to-partition.Rmd

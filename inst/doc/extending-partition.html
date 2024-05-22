@@ -12,7 +12,7 @@
 
 <meta name="author" content="Malcolm Barrett" />
 
-<meta name="date" content="2024-01-24" />
+<meta name="date" content="2024-05-22" />
 
 <title>Extending partition</title>
 
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Extending partition</h1>
 <h4 class="author">Malcolm Barrett</h4>
-<h4 class="date">2024-01-24</h4>
+<h4 class="date">2024-05-22</h4>
 
 
 
@@ -377,6 +377,7 @@ functions to do so. Here, we’ll use <code>as_reducer()</code> and
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;    Director: Minimum Distance (Pearson) </span></span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt;    Metric: Intraclass Correlation </span></span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;    Reducer: &lt;custom reducer&gt;</span></span></code></pre></div>
+<p>extending-partition.R</p>
 <p>Note that it now uses a custom reducer. We can apply
 <code>part_icc_rowmeans</code> the same way as other partitioners.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
@@ -422,6 +423,7 @@ functions to do so. Here, we’ll use <code>as_reducer()</code> and
 <span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a><span class="co">#&gt; 10    0.272     0.605     1.18      -0.213       -0.346          1.10 </span></span>
 <span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a><span class="co">#&gt; # ℹ 90 more rows</span></span>
 <span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a><span class="co">#&gt; # ℹ 2 more variables: reduced_var_3 &lt;dbl&gt;, reduced_var_4 &lt;dbl&gt;</span></span></code></pre></div>
+<p>extending-partition.R</p>
 <p><code>as_measure()</code> works much the same way: it accepts a
 function that returns a single metric to check against the threshold.
 Let’s swap out ICC for inter-item reliability:</p>
@@ -454,6 +456,7 @@ Let’s swap out ICC for inter-item reliability:</p>
 <span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt; Minimum information:</span></span>
 <span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt; 0.513</span></span></code></pre></div>
+<p>extending-partition.R</p>
 <p>This returns a different partition because each reduced variable must
 now have an inter-item reliability of .5 or greater.</p>
 <p><code>as_director()</code> supports directors in the style of
@@ -479,6 +482,7 @@ returns the names of two variables.</p>
 <span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>    <span class="fu">colnames</span>(.x)[indices[<span class="dv">2</span>]]</span>
 <span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  )</span>
 <span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>}</span></code></pre></div>
+<p>extending-partition.R</p>
 <p>We’ll pass these functions to <code>as_director()</code> and, as
 above, apply it to <code>part_icc()</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: FIX</span></span>
@@ -486,6 +490,7 @@ above, apply it to <code>part_icc()</code>.</p>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>prt <span class="ot">&lt;-</span> <span class="fu">partition</span>(df, .<span class="dv">5</span>, <span class="at">partitioner =</span> <span class="fu">replace_partitioner</span>(part_icc, <span class="at">direct =</span> direct_euc_dist))</span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>prt</span></code></pre></div>
+<p>extending-partition.R</p>
 </div>
 <div id="creating-new-partitioners" class="section level2">
 <h2>Creating new partitioners</h2>
@@ -504,6 +509,7 @@ instance, looks like this:</p>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="at">reduce =</span> reduce_scaled_mean</span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  )</span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>}</span></code></pre></div>
+<p>extending-partition.R</p>
 <p>We can use <code>as_partitioner()</code> with the built-in
 <code>direct_*()</code>, <code>measure_*()</code>, and
 <code>reduce_*()</code> functions or apply custom components, like we
@@ -517,6 +523,7 @@ functions we wrote above:</p>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>)</span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a></span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="fu">partition</span>(df, .<span class="dv">5</span>, custom_part)</span></code></pre></div>
+<p>extending-partition.R</p>
 </div>
 <div id="partition_step-map_cluster-and-reduce_cluster" class="section level2">
 <h2><code>partition_step()</code>, <code>map_cluster()</code>, and
@@ -537,6 +544,7 @@ returns a function that looks like this:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="cf">function</span>(.partition_step) {</span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">reduce_cluster</span>(.partition_step, rowMeans)</span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>}</span></code></pre></div>
+<p>extending-partition.R</p>
 <p>This takes a <code>partition_step</code> object, accesses the target
 (here, two variables to reduce) and metric, and if the metric is above
 the threshold, reduces them to a vector–a single reduced variable–using
@@ -553,6 +561,7 @@ using <code>map_cluster()</code> instead of
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="cf">function</span>(.partition_step) {</span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">map_cluster</span>(.partition_step, rowMeans)</span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>}</span></code></pre></div>
+<p>extending-partition.R</p>
 <p>Knowing this can be useful because we can make changes to how the
 function works. Let’s say we want to add the ability to use the
 <code>na.rm</code> argument in <code>rowMeans()</code>:</p>
@@ -560,6 +569,7 @@ function works. Let’s say we want to add the ability to use the
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  partialized_rowMeans <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">partial</span>(rowMeans, <span class="at">na.rm =</span> na.rm)</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">map_cluster</span>(.partition_step, partialized_rowMeans)</span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>extending-partition.R</p>
 <p>But we can also write these components from scratch. To do so, we
 need to work with <code>partition_step</code> directly. Let’s make a new
 director using hierarchical clustering with the <code>hclust()</code>
@@ -613,6 +623,7 @@ generate cluster assignments using <code>cuttree()</code> and
 <span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a></span>
 <span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>  .partition_step</span>
 <span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>}</span></code></pre></div>
+<p>extending-partition.R</p>
 <p>As before, we can use <code>as_partitioner()</code> and apply it to
 our data using <code>partition()</code>. For this partitioner,
 <code>part_hcluster</code>, we’ll use our custom director, as well as
@@ -641,6 +652,7 @@ our data using <code>partition()</code>. For this partitioner,
 <span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a><span class="co">#&gt; Minimum information:</span></span>
 <span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a><span class="co">#&gt; 0.534</span></span></code></pre></div>
+<p>extending-partition.R</p>
 <p>partition is thus fully extensible. While we include many
 pre-specified partitioners, directors, metrics, and reducers, the
 partition algorithm is agnostic to those components; they can be fully

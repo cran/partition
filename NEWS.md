@@ -1,3 +1,6 @@
+# partition 0.2.1
+* Fixed bug in `super_partition()` related to indices not matching (#37)
+
 # partition 0.2.0
 
 * Added `super_partition()`, a new function to preprocess particularly large datasets before partitioning (#29, thanks @katelynqueen98)

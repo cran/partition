@@ -1,7 +1,7 @@
 Type: Package
 Package: partition
 Title: Agglomerative Partitioning Framework for Dimension Reduction
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: c(
     person("Joshua", "Millstein", , "joshua.millstein@usc.edu", role = "aut"),
     person("Malcolm", "Barrett", , "malcolmbarrett@gmail.com", role = c("aut", "cre"),
@@ -37,11 +37,11 @@ Config/testthat/parallel: true
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 NeedsCompilation: yes
-Packaged: 2024-05-22 15:13:43 UTC; malcolmbarrett
+Packaged: 2024-10-09 16:21:53 UTC; malcolmbarrett
 Author: Joshua Millstein [aut],
   Malcolm Barrett [aut, cre] (<https://orcid.org/0000-0003-0299-5825>),
   Katelyn Queen [aut] (<https://orcid.org/0000-0002-8070-3042>)
 Repository: CRAN
-Date/Publication: 2024-05-22 15:40:01 UTC
+Date/Publication: 2024-10-09 17:00:02 UTC
